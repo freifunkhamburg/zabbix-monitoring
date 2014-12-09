@@ -100,35 +100,36 @@ uint64_t countRouters() {
 }
 
 int createSocket() {
-        int create_socket;
-        if((create_socket = socket(AF_LOCAL, SOCK_STREAM, 0)) < 0) {
-                perror("socket");
+	int create_socket;
+	if((create_socket = socket(AF_LOCAL, SOCK_STREAM, 0)) < 0) {
+		perror("socket");
 		return -1;
-        }
+	}
 
-        unlink(SOCKET);
+	unlink(SOCKET);
 
-        struct sockaddr_un address;
-        socklen_t addrlen;
-        address.sun_family = AF_UNIX;
-        strcpy(address.sun_path, SOCKET);
-        addrlen = sizeof(address);
+	struct sockaddr_un address;
+	socklen_t addrlen;
+	address.sun_family = AF_UNIX;
+	strcpy(address.sun_path, SOCKET);
+	addrlen = sizeof(address);
 
-        if(bind(create_socket, (struct sockaddr *)&address, addrlen) != 0) {
-                perror("bind");
+	if(bind(create_socket, (struct sockaddr *)&address, addrlen) != 0) {
+		perror("bind");
 		return -1;
-        }
-        listen(create_socket, 5);
-        chmod(SOCKET, 0666);
+	}
 
-        return create_socket;
+	listen(create_socket, 5);
+	chmod(SOCKET, 0666);
+
+	return create_socket;
 }
 
 void handleClient(int socket) {
-        struct sockaddr_un address;
-        socklen_t addrlen;
+	struct sockaddr_un address;
+	socklen_t addrlen;
 	int client = accept(socket, (struct sockaddr *)&address, &addrlen);
-	if(client >= 0) {
+	if (client >= 0) {
 		std::stringstream ss("");
 		ss << countRouters() << "\n";
 		write(client, ss.str().c_str(), ss.str().size());
