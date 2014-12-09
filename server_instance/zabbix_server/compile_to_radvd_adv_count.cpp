@@ -60,6 +60,10 @@ int openConnection() {
 }
 
 void updateRouter(const std::string &routerString) {
+	if (routerLastSeenMap.find(routerString) != routerLastSeenMap.end()) {
+		routerLastSeenMap.erase(routerString);
+	}
+
 	routerLastSeenMap.insert(std::make_pair(routerString, time(NULL)));
 }
 
