@@ -1,0 +1,2 @@
+zabbix ALL= NOPASSWD:	/opt/bin/zabbix_server/batman_originators.sh
+zabbix ALL= NOPASSWD:	/opt/bin/zabbix_server/radvd_adv_count

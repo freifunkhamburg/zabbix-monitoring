@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/sudo /opt/bin/zabbix_server/batman_originators.sh
